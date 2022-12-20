@@ -1,5 +1,4 @@
 public class ArrayDeque<T> {
-    //    Glorp[] items = (Glorp[]) new Object[8];
     private T[] items;
     private int size;
     private int nextFirst;
@@ -12,23 +11,13 @@ public class ArrayDeque<T> {
         nextLast = 5;
     }
 
-    public ArrayDeque(ArrayDeque<T> other) {
-        size = other.size;
-        nextFirst = other.nextFirst;
-        nextLast = other.nextLast;
-        items = (T[]) new Object[other.items.length];
-        for (int i = 0; i < items.length; i++) {
-            items[i] = other.items[i];
-        }
-    }
-
     public void addFirst(T item) {
         if (size == items.length) {
             T[] resizeItems = (T[]) new Object[items.length * 2];
-            int position = nextFirst;
+            int position = (nextFirst + 1) % items.length;
             for (int i = 0; i < size; i++) {
                 resizeItems[i] = items[position];
-                position = (position + 1) % size;
+                position = (position + 1) % items.length;
             }
             items = resizeItems;
             nextFirst = items.length - 1;
@@ -42,10 +31,10 @@ public class ArrayDeque<T> {
     public void addLast(T item) {
         if (size == items.length) {
             T[] resizeItems = (T[]) new Object[items.length * 2];
-            int position = nextFirst;
+            int position = (nextFirst + 1) % items.length;
             for (int i = 0; i < size; i++) {
                 resizeItems[i] = items[position];
-                position = (position + 1) % size;
+                position = (position + 1) % items.length;
             }
             items = resizeItems;
             nextFirst = items.length - 1;
@@ -79,7 +68,7 @@ public class ArrayDeque<T> {
         if (size == 0) {
             return null;
         }
-        int firstIndex = (nextFirst+1)%items.length;
+        int firstIndex = (nextFirst + 1) % items.length;
         T firstItem = items[firstIndex];
         items[firstIndex] = null;
         nextFirst = firstIndex;
@@ -107,9 +96,5 @@ public class ArrayDeque<T> {
         }
         int pos = (nextFirst + 1 + index) % items.length;
         return items[pos];
-    }
-
-    public static void main(String[] args) {
-        System.out.println(-1 % 8);
     }
 }

@@ -35,7 +35,6 @@ public class ArrayDequeTest {
      * && is the "and" operation. */
     public static void addIsEmptySizeTest() {
         System.out.println("Running add/isEmpty/Size test.");
-        System.out.println("Make sure to uncomment the lines below (and delete this print statement).");
 
         ArrayDeque<String> lld1 = new ArrayDeque<>();
 
@@ -70,26 +69,43 @@ public class ArrayDequeTest {
 
         System.out.println("Running add/remove test.");
 
-        System.out.println("Make sure to uncomment the lines below (and delete this print statement).");
-
         ArrayDeque<Integer> lld1 = new ArrayDeque<>();
         // should be empty
-        boolean passed = checkEmpty(true, lld1.isEmpty());
-
+        lld1.addFirst(0);
+        lld1.addFirst(1);
+        System.out.println("remove first, should be 1 : " + lld1.removeFirst());
+        lld1.addFirst(3);
+        lld1.addFirst(4);
+        lld1.addFirst(5);
+        lld1.addFirst(6);
+        lld1.addFirst(7);
+        lld1.addFirst(8);
+        lld1.addFirst(9);
+        System.out.println("remove first, should be 9 : " + lld1.removeFirst());
         lld1.addFirst(10);
-        // should not be empty
-        passed = checkEmpty(false, lld1.isEmpty()) && passed;
-
         lld1.removeFirst();
-        // should be empty
-        passed = checkEmpty(true, lld1.isEmpty()) && passed;
-
-        printTestStatus(passed);
+        lld1.removeFirst();
+        lld1.removeFirst();
+        lld1.removeFirst();
+        lld1.removeLast();
+        lld1.removeLast();
+        lld1.removeLast();
+        lld1.removeLast();
+        lld1.addLast(10);
+        lld1.addLast(8);
+        lld1.addLast(7);
+        lld1.addLast(6);
+        lld1.addLast(5);
+        lld1.addLast(4);
+        lld1.addLast(3);
+        lld1.addLast(2);
+        lld1.addLast(1);
+        System.out.println("get index 2, should be 6 : " + lld1.get(2));
     }
 
     public static void main(String[] args) {
         System.out.println("Running tests.\n");
-        addIsEmptySizeTest();
-		addRemoveTest();
+//        addIsEmptySizeTest();
+        addRemoveTest();
     }
-} 
+}

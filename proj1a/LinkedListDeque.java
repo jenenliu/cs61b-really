@@ -1,10 +1,10 @@
 public class LinkedListDeque<T> {
-    public static class ItemNode<T> {
+    private static class ItemNode<T> {
         T item;
         ItemNode<T> next;
         ItemNode<T> prev;
 
-        public ItemNode(T item) {
+        ItemNode(T item) {
             this.item = item;
             this.next = null;
             this.prev = null;
@@ -18,17 +18,6 @@ public class LinkedListDeque<T> {
         sentinel.next = sentinel;
         sentinel.prev = sentinel;
         size = 0;
-    }
-
-    public LinkedListDeque(LinkedListDeque<T> other) {
-        sentinel = new ItemNode<>(null);
-        sentinel.next = sentinel;
-        sentinel.prev = sentinel;
-        ItemNode<T> otherFirst = other.sentinel.next;
-        for (int i = 0; i < other.size(); i++) {
-            addLast(otherFirst.next.item);
-            size += 1;
-        }
     }
 
     public void addFirst(T item) {
@@ -66,11 +55,11 @@ public class LinkedListDeque<T> {
     }
 
     public boolean isEmpty() {
-       return size == 0;
+        return size == 0;
     }
 
     public int size() {
-       return size;
+        return size;
     }
 
     public void printDeque() {
@@ -104,8 +93,9 @@ public class LinkedListDeque<T> {
     }
 
     public T get(int index) {
-        if (index >= size || index < 0)
+        if (index >= size || index < 0) {
             return null;
+        }
 
         ItemNode<T> p = sentinel.next;
         for (int i = 0; i < index; i++) {
@@ -118,7 +108,7 @@ public class LinkedListDeque<T> {
         return getRecursiveHelper(sentinel.next, index);
     }
 
-    public T getRecursiveHelper(ItemNode<T> start, int index) {
+    private T getRecursiveHelper(ItemNode<T> start, int index) {
         if (size == 0) {
             return null;
         }
