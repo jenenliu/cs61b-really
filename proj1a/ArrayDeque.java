@@ -9,10 +9,20 @@ public class ArrayDeque<T> {
         items = (T[]) new Object[8];
         size = 0;
         nextFirst = 4;
-        nextLast = 8;
+        nextLast = 5;
     }
 
-    public void addFrist(T item) {
+    public ArrayDeque(ArrayDeque<T> other) {
+        size = other.size;
+        nextFirst = other.nextFirst;
+        nextLast = other.nextLast;
+        items = (T[]) new Object[other.items.length];
+        for (int i = 0; i < items.length; i++) {
+            items[i] = other.items[i];
+        }
+    }
+
+    public void addFirst(T item) {
         if (size == items.length) {
             T[] resizeItems = (T[]) new Object[items.length * 2];
             int position = nextFirst;
@@ -25,7 +35,7 @@ public class ArrayDeque<T> {
             nextLast = size;
         }
         items[nextFirst] = item;
-        nextFirst = (nextFirst + 1) % items.length;
+        nextFirst = (nextFirst - 1 + items.length) % items.length;
         size += 1;
     }
 
@@ -58,7 +68,7 @@ public class ArrayDeque<T> {
         if (size == 0) {
             return;
         }
-        int pos = nextFirst;
+        int pos = (nextFirst + 1) % items.length;
         for (int i = 0; i < size; i++) {
             System.out.println(items[pos]);
             pos = (pos + 1) % items.length;
@@ -66,14 +76,40 @@ public class ArrayDeque<T> {
     }
 
     public T removeFirst() {
-        return null;
+        if (size == 0) {
+            return null;
+        }
+        int firstIndex = (nextFirst+1)%items.length;
+        T firstItem = items[firstIndex];
+        items[firstIndex] = null;
+        nextFirst = firstIndex;
+        size -= 1;
+
+        return firstItem;
     }
 
     public T removeLast() {
-        return null;
+        if (size == 0) {
+            return null;
+        }
+        int lastItemIndex = (nextLast - 1 + items.length) % items.length;
+        T lastItem = items[lastItemIndex];
+        items[lastItemIndex] = null;
+        nextLast = lastItemIndex;
+        size -= 1;
+
+        return lastItem;
     }
 
     public T get(int index) {
-        return null;
+        if (index < 0 || index >= size) {
+            return null;
+        }
+        int pos = (nextFirst + 1 + index) % items.length;
+        return items[pos];
+    }
+
+    public static void main(String[] args) {
+        System.out.println(-1 % 8);
     }
 }
